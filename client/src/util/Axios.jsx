@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-
+const baseUrl = import.meta.env.FRONTEND_URL;
 export const Axios = axios.create({
-    baseURL:"http://localhost:2000",
+    baseURL:baseURL,
     withCredentials:true
 })
 
