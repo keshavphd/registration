@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { allSchema, calculateAge, genderOptions } from "./ZodFile";
 import SummaryAPI, { Axios } from "./util/Axios";
 import SavedDataPage from "./SavedDataPage";
+import Loader from "./util/Loader";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -19,12 +20,10 @@ const App = () => {
   const allData = async () => {
     try {
       setLoading(true);
-      
       const res = await Axios({
         ...SummaryAPI.allData,
       });
       console.log("hikgkgv",res);
-
       setData(res.data.msg);
       console.log("hi", res);
     } catch (error) {
@@ -122,9 +121,7 @@ const App = () => {
           Registration form
         </div>
         {loading && (
-          <div className="fixed top-0 bottom-0 left-0 right-0 bg-black opacity-20">
-            hi
-          </div>
+          <Loader/>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="p-7">
           <label>
