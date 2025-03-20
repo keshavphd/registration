@@ -1,0 +1,37 @@
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const alphabetSchema = z.object({
+  alphabetInput: z.string().regex(/^[a-zA-Z]+$/, 'Please enter only alphabets'),
+});
+
+function App() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(alphabetSchema),
+  });
+
+  const onSubmit = (data) => {
+    console.log('Form submitted successfully:', data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        type="text"
+        {...register('alphabetInput')}
+        placeholder="Enter only alphabets"
+      />
+      {errors.alphabetInput && (
+        <div style={{ color: 'red' }}>{errors.alphabetInput.message}</div>
+      )}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
