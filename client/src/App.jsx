@@ -10,17 +10,21 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-  const [formData, setFormData] = useState();
+  const [formData,setFormData]= useState()
   const [showData, setShowData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [savedData, setSavedData] = useState(false);
+  const [savedData,setSavedData] = useState(false); 
+
 
   const allData = async () => {
     try {
       setLoading(true);
+      
       const res = await Axios({
         ...SummaryAPI.allData,
       });
+      console.log("hikgkgv",res);
+
       setData(res.data.msg);
       console.log("hi", res);
     } catch (error) {
@@ -33,6 +37,7 @@ const App = () => {
   useEffect(() => {
     allData();
   }, []);
+
 
   const {
     register,
@@ -60,7 +65,7 @@ const App = () => {
 
   useEffect(() => {
     if (selectedCountry) {
-      const country = countries.find((c) => c.country === selectedCountry);
+      const country = countries?.find((c) => c.country === selectedCountry);
       if (country) {
         setStates(country.states);
         setValue("state", "");
@@ -96,16 +101,16 @@ const App = () => {
 
   const onSubmit = async (formData) => {
     const age = calculateAge(formData.dateOfBirth);
-    setFormData({ ...formData, age });
+    setFormData({ ...formData, age })
     try {
       setShowData(true);
 
-      /// line below this was not essential
+      /// line below this was not essential 
       const saveData = await Axios({
         ...SummaryAPI.storeData,
         data: { ...formData, age },
       });
-      //   not essential
+ //   not essential
     } catch (error) {
       console.log(error);
     }
@@ -170,7 +175,7 @@ const App = () => {
               {...register("country")}
             >
               <option value="">Select Country</option>
-              {countries.map((country) => (
+              {countries?.map((country) => (
                 <option key={country.id} value={country.country}>
                   {country.country}
                 </option>
@@ -268,16 +273,13 @@ const App = () => {
             </button>
             <div>
               {showData && (
-                <div
-                  onClick={() => setSavedData(true)}
-                  className="bg-blue-700 text-2xl px-16 py-2.5 mt-4 my-12 rounded-2xl text-white"
-                >{`View submitted Data-->`}</div>
+                <div onClick={()=>setSavedData(true)} className="bg-blue-700 text-2xl px-16 py-2.5 mt-4 my-12 rounded-2xl text-white">{`View submitted Data-->`}</div>
               )}
             </div>
           </div>
         </form>
       </div>
-      {savedData && <SavedDataPage data={formData} />}
+      {savedData && (<SavedDataPage data={formData}/>)}
     </div>
   );
 };

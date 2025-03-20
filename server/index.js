@@ -4,16 +4,16 @@ import connectDB from "./utils/database.js";
 import formRouter from "./router/formRouter.js"
 import cors from "cors";
 import morgan from "morgan";
+import dotenv from "dotenv"
+dotenv.config()
 
-const PORT = 2000;
+const PORT = process.env.PORT;
 const app = express();
 app.use(express.json()); // parse the incoming request
 
 
-
-
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   method: "GET,POST,PUT,PATCH,HEAD", //not added delete as not required
   credentials: true,
 };
@@ -42,7 +42,9 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send("Server is running");
+  res.json({
+   port:"Server is running on "+PORT
+});
 });
 
 app.use("/api/form",formRouter);
@@ -51,6 +53,6 @@ app.use("/api/form",formRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server is running on " + PORT);
+    console.log(`Server is running on ${PORT}`);
   });
 });
