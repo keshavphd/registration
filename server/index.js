@@ -42,7 +42,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  console.log("abcd");
+  res.send("Server is running");
 });
 
 app.use("/api/form",formRouter);

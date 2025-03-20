@@ -10,7 +10,8 @@
     "typescript": "^5"
   },
   "scripts": {
-    "web": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
